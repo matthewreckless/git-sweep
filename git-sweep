@@ -1,0 +1,2 @@
+git pruneall
+git branch | grep -v '*' | xargs -I {} git branch -d {}

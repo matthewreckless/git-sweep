@@ -1,0 +1,10 @@
+#!/bin/sh
+
+REMOTE="origin"
+if [ -n "$1" ]; then
+    REMOTE="$1"
+fi
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+git push --set-upstream $REMOTE $BRANCH
+

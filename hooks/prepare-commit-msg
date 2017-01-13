@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$2" == "" ]; then
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    ticket=$(echo "$branch" | cut -d_ -f1)
+    desc=$(echo "$branch" | awk -F_ '{for (i=2; i<NF; i++) printf $i " "; print $NF}')
+    if [ -n "$ticket" ]; then
+        echo "$ticket $desc\nAddresses ticket [$ticket](https://iotgdev.atlassian.net/browse/$ticket).\n\n" > $1
+    fi
+fi

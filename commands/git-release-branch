@@ -1,0 +1,15 @@
+TARGET_RELEASE="$1"
+TARGET_REF="$2"
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+RELEASE_SUFFIX=$(echo $TARGET_RELEASE | cut -d_ -f2)
+
+if [ -z "${RELEASE_SUFFIX// }" ]; then
+    echo "$TARGET_RELEASE doesn't have a valid release suffix" >&2
+    exit 1
+fi
+
+git checkout $TARGET_RELEASE &&
+git checkout $CURRENT_BRANCH &&
+git checkout -b ${CURRENT_BRANCH}_${RELEASE_SUFFIX} &&
+git rebase --onto $TARGET_RELEASE $TARGET_REF
+

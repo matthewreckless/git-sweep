@@ -1,0 +1,8 @@
+TARGET_NAME="$1"
+START_REF="$2"
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+FILTER_BRANCH=${CURRENT_BRANCH}_filter_point
+
+git branch $FILTER_BRANCH $START_REF
+git filter-branch -f --msg-filter "sed s/\"\[dev\]\"/\"\[${TARGET_NAME}\]\"/" ${FILTER_BRANCH}..HEAD
+git branch -D $FILTER_BRANCH > /dev/null 2>&1

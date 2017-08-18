@@ -8,8 +8,7 @@ if [ -z "${RELEASE_SUFFIX// }" ]; then
     exit 1
 fi
 
-git checkout $TARGET_RELEASE &&
-git checkout $CURRENT_BRANCH &&
+git fetch upstream
 git checkout -b ${CURRENT_BRANCH}_${RELEASE_SUFFIX} &&
-git rebase --onto $TARGET_RELEASE $TARGET_REF
+git rebase --onto upstream/$TARGET_RELEASE $TARGET_REF
 
